@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>tewelede</title>
+  <style>
+    :root {
+        --primary: #ff6b6b;
+        --secondary: #ff8e8e;
+        --dark: #333;
+    }
+       .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+.image-container,
+.video-container {
+  
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image-container img,
+.video-container video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 90%; height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .lightbox-content img,
+    .lightbox-content video {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox-close {
+      color: white;
+      font-size: 32px;
+      margin-top: 20px;
+      cursor: pointer;
+      user-select: none;
+      font-family: Arial;
+      border: solid  ;
+      background-color: r;
+    }
+
+    @media (max-width: 600px) {
+      .gallery-item img, .gallery-item video {
+        height: 240px;
+      }
+    } 
+    h1 {
+        font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+        font-size: 2.8rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    
+    h2 {
+        font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: var(--secondary);
+        font-weight: 400;
+    }
+    
+    .heart {
+        color: #ff6b6b;
+        animation: pulse 1.5s infinite;
+        display: inline-block;
+    }
+      /* Fixed slideshow styles */
+    .slideshow-container {
+      position: relative;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    
+    .slides {
+      display: none;
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      
+      
+      grid-template-columns:repeat(auto-fill,minmax(240px, 1fe));
+    }
+    
+    .fade {
+      animation-name: fade;
+      animation-duration: 2s;
+    }
+    
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+    
+    .audio-player {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    
+    .countdown-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 2rem auto;
+        max-width: full;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .countdown {
+      font-family: arial;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin: 1rem 0;
+        color: var(--dark);
+    }
+    
+    .countdown span {
+        font-weight: bold;
+        color: var(--primary);
+    }
+    
+    /* Enhanced Balloon Sprinkle Effect */
+    .balloon-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+    }
+    
+    .falling-balloon {
+        position: absolute;
+        font-size: 20px;
+        animation: falling linear infinite;
+        text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+    }
+    
+    @keyframes falling {
+        0% {
+            transform: translate(0, -10vh) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(var(--random-x), 100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    /* Click Confetti Explosion Effect */
+    .confetti-explosion {
+        position: fixed;
+        pointer-events: none;
+        z-index: 1000;
+    }
+    
+    .confetti-particle {
+        position: absolute;
+        font-size: 16px;
+        animation: explode 1s ease-out forwards;
+    }
+    
+    @keyframes explode {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(var(--tx), var(--ty)) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .header-container {
+            padding: 1.5rem;
+            margin: 1rem auto;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.2rem;
+        }
+        
+        .slides {
+            max-height: 70vh;
+        }
+        
+        .countdown {
+            font-size: 1rem;
+        }
+    }
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #ffebee;
+    }
+
+    .top-section {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .header-img {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .search-bar {
+      margin-top: 10px;
+      padding: 10px;
+      background: white;
+      border-radius: 30px;
+      display: inline-block;
+      font-weight: bold;
+      color: #d81b60;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #d81b60;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .content {
+      margin-top: 20px;
+    }
+
+    .letter {
+      background-color: white;
+      padding: 15px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .memories-container {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .memories-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .memories-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #d81b60;
+    }
+
+    /* Polaroid-style photo frames */
+    .photo-frame {
+      background: white;
+      padding: 15px 15px 60px 15px;
+      border-radius: 2px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: relative;
+      transition: all 0.3s ease;
+      transform: rotate(-2deg);
+    }
+
+    .memory-item:nth-child(even) .photo-frame {
+      transform: rotate(2deg);
+    }
+
+    .photo-frame:hover {
+      transform: rotate(0deg) scale(1.05) !important;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .memory-photo {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 10px;
+    }
+
+    .polaroid-caption {
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+    }
+
+    .photo-date {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 15px;
+      font-size: 11px;
+      z-index: 2;
+    }
+
+    /* For the grid layout */
+    .memories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .back-button {
+      background-color: #d81b60;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #ad1457;
+    }
+
+    .profile-container {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .profile-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #d81b60;
+      font-family:jazz let,fantasy;
+    }
+
+    .profile-info {
+      margin-bottom: 10px;
+    }
+    
+    .letter-post {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: relative;
+      border: 2px solid #f8bbd0;
+    }
+    
+    .letter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px dashed #f8bbd0;
+      padding-bottom: 10px;
+    }
+    
+    .letter-title {
+      font-size: 24px;
+      color: #d81b60;
+      font-weight: bold;
+      font-family:ocr a wtd,monospace;
+    }
+    
+    .letter-date {
+      color: #888;
+      font-style: italic;
+    }
+     .container {
+      padding: 5px;
+      text-align: center;
+    }
+    .letter-content {
+      text-align: left;
+      line-height: 1.6;
+        font-family: luminari,fantasy;
+    }
+    
+    .letter-signature {
+      text-align: right;
+      margin-top: 20px;
+      font-style: italic;
+      color: #d81b60;
+      font-weight: bold;
+    
+    }
+    
+    .balloon-decoration {
+      position: absolute;
+      font-size: 20px;
+    }
+    
+    .balloon-1 { top: 10px; left: 10px; color: #e91e63; }
+    .balloon-2 { top: 10px; right: 10px; color: #9c27b0; }
+    .balloon-3 { bottom: 10px; left: 10px; color: #3f51b5; }
+    .balloon-4 { bottom: 10px; right: 10px; color: #00bcd4; }
+    
+    /* Birthday specific styles */
+    .birthday-cake {
+      font-size: 50px;
+      animation: bounce 1s infinite alternate;
+    }
+    
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    
+    .birthday-hat {
+      font-size: 30px;
+      position: relative;
+      top: -10px;
+    }
+    
+    .wish-container {
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .wish-title {
+      font-size: 28px;
+      color: #d81b60;
+      margin-bottom: 15px;
+      font-family: 'Dancing Script', cursive;
+    }
+    
+    .gift-box {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+      margin: 20px auto;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .gift-box:hover {
+      transform: scale(1.1);
+    }
+    
+    .gift-box::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 100px;
+      background: rgba(255,255,255,0.3);
+      transform: rotate(45deg);
+      left: 40px;
+    }
+    
+   .gift-message {
+  display: none;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-family: luminari, fantasy;
+  font-size: 18px;
+  color: #d81b60;
+  text-align: center;
+  border: 1px dashed #f8bbd0;
+}
+
+.gift-message p {
+  margin: 0;
+  line-height: 1.6;
+}
+  </style>
+</head>
+<body>
+    <div class="container">
+    <div class="top-section">
+      <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_566.jpg?updatedAt=1745215973265" alt="Birthday Celebration" class="header-img"/>
+      <div class="search-bar">Happy Birthday! 🎉</div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="showProfile()">Our Profile</button>
+      <button onclick="showMessage()">birthday wish</button>
+      <button onclick="showMemories()">Happy Moments</button>
+    </div>
+
+    <div class="content" id="content-area"></div>
+  </div>
+
+  <script>
+    // Initialize the page when it loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initializePage();
+    });
+    
+    function initializePage() {
+        // Initialize all page functionality
+        createBalloonRain();
+        setInterval(createBalloonRain, 3000);
+        
+        // Update countdown immediately and then every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+        
+    // Slideshow functionality
+    let slideIndex = 1;
+    showSlides(slideIndex);
+        
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+        
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+        
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("slides");
+        if (slides.length === 0) return; // Exit if no slides exist yet
+        
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex-1].style.display = "block";
+    }
+        
+    // Auto-advance slides
+    setInterval(() => {
+        plusSlides(1);
+    }, 5000);
+        
+    function updateCountdown() {
+        // Set relationship start date here (Year, Month-1, Day)
+        const startDate = new Date(2021, 3, 22); // February 7, 2022
+        
+        const now = new Date();
+        const diff = now - startDate;
+        
+        // Calculate years
+        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+        
+        // Calculate remaining months after years
+        const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30.44));
+        
+        // Calculate remaining days after months
+        const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+        
+        // Calculate hours, minutes, seconds
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        // Update the display if elements exist
+        const yearsEl = document.getElementById("years");
+        const monthsEl = document.getElementById("months");
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+        
+        if (yearsEl) yearsEl.textContent = years;
+        if (monthsEl) monthsEl.textContent = Math.floor(months);
+        if (daysEl) daysEl.textContent = Math.floor(days);
+        if (hoursEl) hoursEl.textContent = hours;
+        if (minutesEl) minutesEl.textContent = minutes;
+        if (secondsEl) secondsEl.textContent = seconds;
+    }
+    
+    function createBalloonRain() {
+        const balloonRain = document.createElement('div');
+        balloonRain.className = 'balloon-rain';
+        
+        // Balloon characters (can use emoji or HTML entities)
+        const balloons = ['👸', '&#129505', '&#128152', '&#128149', '&#10052', '&#10052', '🎀'];
+        
+        // Create 30 balloons
+        for (let i = 0; i < 30; i++) {
+            const balloon = document.createElement('div');
+            balloon.className = 'falling-balloon';
+            balloon.innerHTML = balloons[Math.floor(Math.random() * balloons.length)];
+            
+            // Random position and animation duration
+            const leftPos = Math.random() * 100;
+            const animDuration = Math.random() * 3 + 2;
+            const delay = Math.random() * 5;
+            const size = Math.random() * 20 + 20;
+            
+            balloon.style.left = `${leftPos}%`;
+            balloon.style.fontSize = `${size}px`;
+            balloon.style.animationDuration = `${animDuration}s`;
+            balloon.style.animationDelay = `${delay}s`;
+            
+            // Random color
+            const colors = ['#e91e63', '#9c27b0', '#3f51b5', '#00bcd4', '#4caf50', '#ffeb3b', '#ff9800'];
+            balloon.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Random x movement during fall
+            balloon.style.setProperty('--random-x', `${(Math.random() - 0.5) * 100}px`);
+            
+            balloonRain.appendChild(balloon);
+        }
+        
+        document.body.appendChild(balloonRain);
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            balloonRain.remove();
+        }, 8000);
+    }
+    
+    
+    function showProfile() {
+      document.getElementById("content-area").innerHTML = `
+        <div class="wish-container">
+          <div class="wish-title"  style="font-family:arial;">our special Photos!  &hearts;
+          
+          <div class="slideshow-container">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_985.jpg?updatedAt=1745215959271" style="width:100%"> 
+                   <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085842_192.jpg?updatedAt=1745215938769" style="width:100%"> 
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085842_531.jpg?updatedAt=1745215945732" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085841_696.jpg?updatedAt=1745215955182" style="width:100%;">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085840_515.jpg?updatedAt=1745215972227" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085840_701.jpg?updatedAt=1745215969759" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085840_081.jpg?updatedAt=1745215960903" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085841_036.jpg?updatedAt=1745215958964" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085841_849.jpg?updatedAt=1745215958667" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085841_696.jpg?updatedAt=1745215955182" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_605.jpg?updatedAt=1745215950278" style="width:100%">
+                   <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085842_106.jpg?updatedAt=1745215946026" style="width:100%"> 
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_111.jpg?updatedAt=1745215941181" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_533.jpg?updatedAt=1745215936961" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_531.jpg?updatedAt=1745215936997" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_992.jpg?updatedAt=1745215935407" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085842_029.jpg?updatedAt=1745215929320" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085841_486.jpg?updatedAt=1745215747525" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085840_306.jpg?updatedAt=1745215765907" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085841_486.jpg?updatedAt=1745215747525" style="width:100%">
+              <img class="slides fade" src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085841_498.jpg?updatedAt=1745215758143" style="width:100%">
+          </div>
+ 
+                <div class="audio-container">
+              <h3>Birthday Song <span class="heart">♪</span></h3>
+              <div class="audio-player">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4jtfzr5bobbZSgXB2GEdrs?utm_source=generator" width="100%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe
+              </div>
+          </div>
+      
+
+          <div class="countdown-container">
+            <h3>Our Time Together <span class="heart">⏳</span></h3>
+            <div class="countdown">
+                <span id="years">0</span> years, 
+                <span id="months">0</span> months, 
+                <span id="days">0</span> days, 
+                <span id="hours">0</span> hours, 
+                <span id="minutes">0</span> minutes, 
+                <span id="seconds">0</span> seconds
+            </div>
+            <p style=" font-family:monospace;">Every moment with you is precious ❤</p>
+          </div>
+          
+          <p style="font-family:arial;">Wishing you a fantastic year ahead! <span class="birthday-cake">🎂</span></p>
+          
+          <div class="gift-box" onclick="showGiftMessage()">
+            🎁
+          </div>
+          <div id="gift-message" class="gift-message">
+            <p >My gift to you is all my love and a promise to make this your best year yet!</p>
+          </div>
+        </div>
+      `;
+      
+      // Reinitialize slideshow for the newly added slides
+      slideIndex = 1;
+      showSlides(slideIndex);
+    }
+
+    function showGiftMessage() {
+      const giftMessage = document.getElementById("gift-message");
+      if (giftMessage.style.display === "block") {
+        giftMessage.style.display = "none";
+      } else {
+        giftMessage.style.display = "block";
+      }
+    }
+
+    function showMessage() {
+  document.getElementById("content-area").innerHTML = `
+    <div style="display: flex; flex-direction: column; gap: 20px; font-family:luminari,fantasy;">
+      <div style="position: relative; border: 2px solid #ff69b4; padding: 20px; border-radius: 10px; background-color: #fff0f5;">
+        <h2 style="color: #d81b60; text-align: center;">🎂 Birthday Message 💌</h2>
+        <div style="position: absolute; top: 10px; right: 10px; font-size: 12px;">${new Date().toLocaleDateString()}</div>
+        
+        <div style="margin-top: 15px;">
+          <p>My Dearest,</p>
+          <p>Happy Birthday to the most amazing girlfriend a person could ask for! Today is all about you, a day to celebrate the wonderful person you are and the incredible joy you bring into my life. Thinking about you fills my heart with happiness, and I'm so grateful to have you by my side. May this day be as bright and beautiful as you are..</p>
+          <p>There are so many things I adore about you. Your kindness shines through in everything you do, and your laughter is truly infectious. You have a way of making even the ordinary moments feel special, and your strength and resilience inspire me every day. You're intelligent, compassionate, and have a beautiful way of looking at the world. I cherish all these qualities and so much more.</p>
+          <p>Thinking back on our time together, so many precious memories flood my mind. From our first date to our silliest adventures, each moment with you is a treasure I hold dear. You've made my life richer and more colorful, and I love looking back at all the laughter, support, and love we've shared. These memories are the foundation of something truly special</p>
+          <p>Today, my biggest wish is for you to have a birthday filled with everything that brings you joy. May you be surrounded by love, laughter, and all the people who cherish you. I hope this day is filled with wonderful surprises and moments that make you feel truly celebrated, because you deserve all the happiness in the world</p>
+          <p>As another year begins for you, I'm so excited for all the adventures and experiences that lie ahead for us. I look forward to creating even more beautiful memories together and continuing to grow alongside you. Thank you for being you, for being my girlfriend, and for making my life so much better. Happy Birthday, my love. Here's to many more amazing birthdays together!</p>
+        </div>
+      </div>
+
+      <div style="position: relative; border: 2px solid #8e24aa; padding: 20px; border-radius: 10px; background-color: #f3e5f5;">
+        <h2 style="color: #8e24aa; text-align: center;">💖 Anniversary Message 💞</h2>
+        <div style="position: absolute; top: 10px; right: 10px; font-size: 12px;">${new Date().toLocaleDateString()}</div>
+        
+        <div style="margin-top: 15px;">
+          <p>My Love,</p>
+          <p>Today, as we celebrate another year together, my heart is filled with so much gratitude for you. This anniversary isn't just about the time that has passed; it's a celebration of the incredible woman you are, the joy you bring into my life, and the beautiful partnership we share. You make every day brighter, and reaching this milestone with you feels like a wonderful dream come true..</p>
+          <p>Looking back, I'm constantly amazed by your strength, your grace, and the unwavering love you pour into everything you do. You navigate life's challenges with such resilience and always manage to find beauty even in the difficult moments. Your kindness touches everyone around you, and your spirit inspires me every single day. The way you nurture our connection is truly a gift..</p>
+          <p>Every memory we've created together is a treasure I hold dear. From the big adventures to the quiet moments of comfort, each experience has woven a richer tapestry into our lives. Your laughter is my favorite sound, and your presence brings me a sense of peace and belonging that I wouldn't trade for anything. These shared moments are the heart of our journey.
+
+</p>
+          <p>As we celebrate today, I'm filled with excitement for all the future holds with you. I cherish the thought of more shared dreams, new adventures, and a deepening of the incredible bond we have. Knowing I have you by my side makes every possibility feel brighter and more meaningful. Our journey together is my greatest adventure, and I can't wait to see what comes next.</p>
+          <p>My dearest, on this special anniversary, I want you to know how deeply loved and appreciated you are. You are my rock, my confidante, my best friend, and the love of my life. May this day be filled with all the happiness you deserve, and may our love continue to grow stronger and more beautiful with each passing year. Happy Anniversary, my love.</p>
+        </div>
+      </div>
+
+      <button onclick="closeContent()" style="margin-top: 10px; padding: 10px; background-color: #d81b60; color: white; border: none; border-radius: 5px;">Close Messages</button>
+    </div>
+  `;
+}
+
+function closeContent() {
+  document.getElementById("content-area").innerHTML = '';
+}
+
+    function showMemories() {
+      document.getElementById("content-area").innerHTML = `
+        <div class="gallery">
+          <!-- Photos -->
+             <div class="gallery-item">
+            <div class="image-container"></div>
+            
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085844_535.jpg?updatedAt=1745215744013" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085841_486.jpg?updatedAt=1745215747525" alt="Memory">
+          </div>
+             <div class="gallery-item">
+            <div class="image-container"></div>
+            
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085841_988.jpg?updatedAt=1745215748484" alt="Memory">
+          </div>
+          
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085840_306.jpg?updatedAt=1745215765907" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085842_686.jpg?updatedAt=1745215749651" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085840_515.jpg?updatedAt=1745215972227" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085840_701.jpg?updatedAt=1745215969759" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085842_471.jpg?updatedAt=1745215965020" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085841_036.jpg?updatedAt=1745215958964" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_531.jpg?updatedAt=1745215936997" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_992.jpg?updatedAt=1745215935407" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/IMG_20250421_085843_982.jpg?updatedAt=1745224665027" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/IMG_20250421_085842_750.jpg?updatedAt=1745224664988" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/IMG_20250421_085841_459.jpg?updatedAt=1745224661814" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/IMG_20250421_085841_425.jpg?updatedAt=1745224664797" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/IMG_20250421_085843_116.jpg?updatedAt=1745224662141" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tewe/IMG_20250421_085844_531.jpg?updatedAt=1745215936997" alt="Memory">
+          </div>
+          <div class="gallery-item">
+            <div class="image-container"></div>
+            <img src="https://ik.imagekit.io/iqzxn48zw/Tew/IMG_20250421_085842_299.jpg?updatedAt=1745215739847" alt="Memory">
+          </div>
+          
+         
+        
+        <!-- Lightbox -->
+        <div class="lightbox" id="lightbox">
+          <div class="lightbox-content" id="lightboxContent"></div>
+          <div class="lightbox-close" onclick="closeLightbox()">× Close</div>
+        </div>
+        
+        <button onclick="closeContent()" style="margin-top: 20px; background-color: #d81b60; color: white;">Back to Main</button>
+      `;
+      
+      // Initialize lightbox functionality
+       const lightbox = document.getElementById('lightbox');
+    const content = document.getElementById('lightboxContent');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const media = item.querySelector('img, video').cloneNode(true);
+        if (media.tagName === 'VIDEO') {
+          media.setAttribute('controls', true);
+          media.removeAttribute('muted');
+          media.play();
+        }
+        content.innerHTML = '';
+        content.appendChild(media);
+        lightbox.classList.add('show');
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('show');
+      content.innerHTML = '';
+    }
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  
+  document.getElementById("content-area").innerHTML = `
+    <div class="memories-container">
+      <div class="memories-header">
+        <div class="memories-title">HAPPY MEMORIES</div>
+        <div class="back-button" onclick="closeContent()">Back</div>
+      </div>
+      <div class="memories-grid">
+        ${photosHTML}
+      </div>
+    </div>
+  `;
+}
+    function closeContent() {
+      document.getElementById("content-area").innerHTML = "";
+    }
+    
+    // Add click effect for confetti
+    document.addEventListener('click', function(e) {
+        createConfettiExplosion(e.clientX, e.clientY);
+    });
+    
+    function createConfettiExplosion(x, y) {
+        const explosion = document.createElement('div');
+        explosion.className = 'confetti-explosion';
+        
+        // Confetti characters
+        const confetti = ['&#128149', '👸', '✨', '&#129505', '&#129392;', '🎀', '💝', '💖','🧡', '💛', '💚', '💙', '💜', '🖤'];
+        
+        // Create 15 confetti particles
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'confetti-particle';
+            particle.innerHTML = confetti[Math.floor(Math.random() * confetti.length)];
+            
+            // Random direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 100 + 50;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            // Random size
+            const size = Math.random() * 10 + 10;
+            particle.style.fontSize = `${size}px`;
+            
+            // Random color
+            const colors = ['#e91e63', '#9c27b0', '#3f51b5', '#00bcd4', '#4caf50', '#ffeb3b', '#ff9800'];
+            particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            explosion.appendChild(particle);
+        }
+        
+        document.body.appendChild(explosion);
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            explosion.remove();
+        }, 1000);
+    }
+        const lightbox = document.getElementById('lightbox');
+    const content = document.getElementById('lightboxContent');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const media = item.querySelector('img, video').cloneNode(true);
+        if (media.tagName === 'VIDEO') {
+          media.setAttribute('controls', true);
+          media.removeAttribute('muted');
+          media.play();
+        }
+        content.innerHTML = '';
+        content.appendChild(media);
+        lightbox.classList.add('show');
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('show');
+      content.innerHTML = '';
+    }
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
